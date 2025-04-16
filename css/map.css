@@ -1,0 +1,69 @@
+/* css/map.css */
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    border: 1px solid var(--gray-medium);
+    position: relative;
+    z-index: 1; /* Ensure proper z-index for map rendering */
+}
+
+/* Make sure popup styles are properly defined */
+.leaflet-popup-content {
+    padding: 8px;
+    max-width: 300px;
+}
+
+.report-popup h3,
+.shelter-popup h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.report-popup p,
+.shelter-popup p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-progress {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-resolved {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #e5e7eb;
+    color: #374151;
+    margin-right: 4px;
+}
+
+/* Fix for mobile view */
+@media (max-width: 768px) {
+    #map {
+        height: 350px;
+    }
+}

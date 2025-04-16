@@ -1,0 +1,293 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReliefLink - Smart Disaster Response Platform</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-hands-helping"></i>
+                <h1>ReliefLink</h1>
+            </div>
+            <div class="nav-buttons">
+                <button id="public-mode-btn" class="btn btn-blue active">Public Mode</button>
+                <button id="admin-login-btn" class="btn btn-gray">Admin Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="container main-content">
+        <!-- Admin Login Modal -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <h2>Admin Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                        <p class="help-text">For demo: admin/admin123</p>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="close-login-btn" class="btn btn-gray">Cancel</button>
+                        <button type="submit" class="btn btn-blue">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <!-- Left Column - Map Section -->
+            <div class="map-column">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Real-Time Crisis Map</h2>
+                        <div class="incident-badge">
+                            <i class="fas fa-exclamation-triangle"></i> 
+                            <span id="active-incidents">0</span> Active Incidents
+                        </div>
+                    </div>
+                    <div id="map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <span class="marker emergency"></span>
+                            <span>Emergency</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="marker supplies"></span>
+                            <span>Supply Need</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="marker medical"></span>
+                            <span>Medical Need</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="marker shelter"></span>
+                            <span>Shelter</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="marker infrastructure"></span>
+                            <span>Infrastructure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Public Interface -->
+            <div id="public-interface" class="sidebar-column">
+                <div class="card">
+                    <h2>Report an Emergency</h2>
+                    <form id="report-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact (Phone/Email)</label>
+                            <input type="text" id="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <div class="location-input">
+                                <input type="text" id="location" placeholder="Address" required>
+                                <button type="button" id="use-my-location" class="btn btn-location">
+                                    <i class="fas fa-location-dot"></i>
+                                </button>
+                            </div>
+                            <p id="detecting-location" class="location-status hidden">
+                                <i class="fas fa-spinner fa-spin"></i> Detecting your location...
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label for="issue-type">Emergency Type</label>
+                            <select id="issue-type" required>
+                                <option value="">-- Select Issue Type --</option>
+                                <option value="emergency">Emergency (Immediate Life Threat)</option>
+                                <option value="medical">Medical Need</option>
+                                <option value="supplies">Supply Need (Water, Food, etc.)</option>
+                                <option value="shelter">Shelter Need</option>
+                                <option value="infrastructure">Infrastructure Damage</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="people-affected">People Affected (Approx.)</label>
+                            <input type="number" id="people-affected" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-emergency">
+                            <i class="fas fa-exclamation-triangle"></i> Submit Emergency Report
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Alerts Section -->
+                <div class="card">
+                    <h2>Emergency Alerts</h2>
+                    <div id="alerts-container">
+                        <!-- Alerts will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard Interface (Hidden by default) -->
+            <div id="admin-interface" class="sidebar-column hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Admin Dashboard</h2>
+                        <span class="admin-badge">Admin Mode</span>
+                    </div>
+                    
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="reports">Reports</button>
+                        <button class="tab-button" data-tab="alerts">Send Alerts</button>
+                        <button class="tab-button" data-tab="resources">Resources</button>
+                    </div>
+                    
+                    <!-- Reports Tab -->
+                    <div id="reports-tab" class="tab-content active">
+                        <div class="filters">
+                            <select id="filter-reports">
+                                <option value="all">All Reports</option>
+                                <option value="pending">Pending</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                            <button id="refresh-reports" class="btn btn-small">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div id="reports-list" class="scrollable-list"></div>
+                    </div>
+                    
+                    <!-- Alerts Tab -->
+                    <div id="alerts-tab" class="tab-content">
+                        <form id="send-alert-form">
+                            <div class="form-group">
+                                <label for="alert-type">Alert Type</label>
+                                <select id="alert-type" required>
+                                    <option value="emergency">Emergency Alert</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="info">Information</option>
+                                    <option value="update">Status Update</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="alert-title">Alert Title</label>
+                                <input type="text" id="alert-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="alert-message">Message</label>
+                                <textarea id="alert-message" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="alert-area">Target Area</label>
+                                <select id="alert-area" required>
+                                    <option value="all">All Areas</option>
+                                    <option value="downtown">Downtown</option>
+                                    <option value="north">North District</option>
+                                    <option value="east">East District</option>
+                                    <option value="south">South District</option>
+                                    <option value="west">West District</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-blue">Send Alert</button>
+                        </form>
+                        <h3>Recent Alerts</h3>
+                        <div id="admin-alerts-list" class="scrollable-list"></div>
+                    </div>
+                    
+                    <!-- Resources Tab -->
+                    <div id="resources-tab" class="tab-content">
+                        <div class="resource-stats">
+                            <div class="stat-card">
+                                <h4>Available Teams</h4>
+                                <div class="stat-number">8</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Medical Supplies</h4>
+                                <div class="stat-number">72%</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>Food/Water</h4>
+                                <div class="stat-number">54%</div>
+                            </div>
+                        </div>
+                        <h3>Allocate Resources</h3>
+                        <form id="allocate-resources-form">
+                            <div class="form-group">
+                                <label for="resource-type">Resource Type</label>
+                                <select id="resource-type" required>
+                                    <option value="rescue">Rescue Team</option>
+                                    <option value="medical">Medical Team</option>
+                                    <option value="food">Food/Water</option>
+                                    <option value="shelter">Shelter Supplies</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="resource-location">Location</label>
+                                <input type="text" id="resource-location" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resource-priority">Priority</label>
+                                <select id="resource-priority" required>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-blue">Allocate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Success!</h2>
+            <p id="modal-message">Your emergency report has been submitted successfully.</p>
+            <button id="modal-confirm" class="btn btn-blue">OK</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    
+    <!-- Mock Data -->
+    <script src="data/mock-reports.js"></script>
+    <script src="data/mock-shelters.js"></script>
+    <script src="data/mock-alerts.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/map.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
