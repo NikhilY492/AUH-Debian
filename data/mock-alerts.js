@@ -1,27 +1,26 @@
-// data/mock-alerts.js
 const mockAlerts = [
     {
         id: 'A001',
         type: 'emergency',
-        title: 'Flash Flood Warning',
-        message: 'Immediate evacuation required in downtown areas. Move to higher ground.',
-        area: 'downtown',
-        timestamp: new Date(Date.now() - 1000 * 60 * 10) // 10 minutes ago
+        title: 'Flood Alert – MVP Colony',
+        message: 'Evacuate low-lying areas immediately in MVP Colony. Move to designated shelters.',
+        area: 'MVP Colony',
+        timestamp: new Date(Date.now() - 1000 * 60 * 10)
     },
     {
         id: 'A002',
         type: 'warning',
-        title: 'Severe Weather Alert',
-        message: 'Strong winds and heavy rain expected in the next 6 hours. Secure loose objects and stay indoors if possible.',
-        area: 'all',
-        timestamp: new Date(Date.now() - 1000 * 60 * 120) // 2 hours ago
+        title: 'Cyclone Warning',
+        message: 'Heavy rains and winds expected along the coastline near RK Beach in the next 6 hours.',
+        area: 'RK Beach',
+        timestamp: new Date(Date.now() - 1000 * 60 * 120)
     },
     {
         id: 'A003',
         type: 'info',
-        title: 'Road Closure',
-        message: 'Main Street between 5th and 8th Avenue is closed due to flooding. Use alternate routes.',
-        area: 'downtown',
-        timestamp: new Date(Date.now() - 1000 * 60 * 180) // 3 hours ago
+        title: 'Road Blockage',
+        message: 'Beach Road is blocked due to waterlogging. Use alternate routes.',
+        area: 'Beach Road',
+        timestamp: new Date(Date.now() - 1000 * 60 * 180)
     }
 ];

@@ -8,7 +8,6 @@
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
@@ -289,5 +288,48 @@
     <script src="js/admin.js"></script>
     <script src="js/alerts.js"></script>
     <script src="js/main.js"></script>
+    <!-- Resource Status Overview -->
+<div class="resource-stats">
+    <div class="stat-card">
+        <h4>Rescue Teams</h4>
+        <div class="stat-number" id="rescue-count">--</div>
+    </div>
+    <div class="stat-card">
+        <h4>Medical Teams</h4>
+        <div class="stat-number" id="medical-count">--</div>
+    </div>
+    <div class="stat-card">
+        <h4>Food/Water</h4>
+        <div class="stat-number" id="food-count">--</div>
+    </div>
+    <div class="stat-card">
+        <h4>Shelter Kits</h4>
+        <div class="stat-number" id="shelter-count">--</div>
+    </div>
+</div>
+
+<!-- Suggested Allocation Based on Selected Report -->
+<div class="card">
+    <h3>Allocate Resources to Emergency</h3>
+    <form id="smart-allocate-form">
+        <div class="form-group">
+            <label for="select-report">Select Emergency</label>
+            <select id="select-report">
+                <option value="">-- Choose Report --</option>
+                <!-- Populated dynamically -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="suggested-resource">Suggested Resource</label>
+            <input type="text" id="suggested-resource" disabled>
+        </div>
+        <div class="form-group">
+            <label for="assign-quantity">Quantity</label>
+            <input type="number" id="assign-quantity" min="1" required>
+        </div>
+        <button type="submit" class="btn btn-blue">Allocate Resource</button>
+    </form>
+</div>
+
 </body>
 </html>

@@ -1,51 +1,50 @@
-// data/mock-reports.js
 const mockReports = [
     {
         id: 'R1001',
-        name: 'John Smith',
-        contact: '555-123-4567',
-        location: 'Downtown, Main St & 5th Ave',
-        coordinates: [40.7128, -74.0060],
+        name: 'Rajesh Kumar',
+        contact: '9876543210',
+        location: 'MVP Colony, Sector 5',
+        coordinates: [17.7281, 83.3192],
         type: 'emergency',
-        description: 'Building partially collapsed, people trapped inside.',
-        peopleAffected: 12,
-        timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
+        description: 'Apartment basement flooded, 10 people stuck.',
+        peopleAffected: 10,
+        timestamp: new Date(Date.now() - 1000 * 60 * 30),
         status: 'in-progress'
     },
     {
         id: 'R1002',
-        name: 'Maria Garcia',
-        contact: 'maria@example.com',
-        location: 'North District, Oak Street',
-        coordinates: [40.7200, -74.0100],
+        name: 'Anjali Mehta',
+        contact: 'anjali@example.com',
+        location: 'Gajuwaka Main Road',
+        coordinates: [17.6801, 83.2075],
         type: 'medical',
-        description: 'Several elderly people need medical attention, no access to medicine.',
-        peopleAffected: 7,
-        timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
+        description: 'Two elderly residents need medical assistance, no transport.',
+        peopleAffected: 2,
+        timestamp: new Date(Date.now() - 1000 * 60 * 60),
         status: 'pending'
     },
     {
         id: 'R1003',
-        name: 'David Wilson',
-        contact: '555-987-6543',
-        location: 'East District, River Rd',
-        coordinates: [40.7150, -73.9900],
+        name: 'Vinod Reddy',
+        contact: 'vinodreddy@example.com',
+        location: 'Dabagardens, near RTC Complex',
+        coordinates: [17.7041, 83.2994],
         type: 'supplies',
-        description: 'Neighborhood cut off by flooding, running low on drinking water and food.',
-        peopleAffected: 45,
-        timestamp: new Date(Date.now() - 1000 * 60 * 90), // 1.5 hours ago
+        description: 'Colony running out of food and clean water.',
+        peopleAffected: 40,
+        timestamp: new Date(Date.now() - 1000 * 60 * 90),
         status: 'pending'
     },
     {
         id: 'R1004',
-        name: 'Sarah Johnson',
-        contact: 'sarah@example.com',
-        location: 'West District, Pine Ave',
-        coordinates: [40.7180, -74.0200],
+        name: 'Sneha Rao',
+        contact: 'sneha@example.com',
+        location: 'Yendada Hills',
+        coordinates: [17.7480, 83.3210],
         type: 'infrastructure',
-        description: 'Power lines down, causing fire risk. Road blocked.',
-        peopleAffected: 30,
-        timestamp: new Date(Date.now() - 1000 * 60 * 120), // 2 hours ago
+        description: 'Power lines snapped, sparks near a transformer.',
+        peopleAffected: 20,
+        timestamp: new Date(Date.now() - 1000 * 60 * 120),
         status: 'resolved'
     }
 ];

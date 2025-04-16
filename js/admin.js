@@ -125,3 +125,64 @@ function allocateResources(event) {
     // Reset form
     document.getElementById('allocate-resources-form').reset();
 }
+// Mock Resource Data (or replace with API call)
+const resourceInventory = {
+    rescue: 8,
+    medical: 5,
+    food: 100,
+    shelter: 40,
+};
+
+// Emergency Types mapped to Suggested Resources
+const emergencyResourceMap = {
+    emergency: "rescue",
+    medical: "medical",
+    supplies: "food",
+    shelter: "shelter",
+    infrastructure: "rescue",
+};
+
+// Populate resource stats
+function loadResourceStats() {
+    document.getElementById("rescue-count").textContent = resourceInventory.rescue;
+    document.getElementById("medical-count").textContent = resourceInventory.medical;
+    document.getElementById("food-count").textContent = resourceInventory.food;
+    document.getElementById("shelter-count").textContent = resourceInventory.shelter;
+}
+
+// Populate report dropdown
+function populateReportsDropdown(reports) {
+    const reportDropdown = document.getElementById("select-report");
+    reportDropdown.innerHTML = '<option value="">-- Choose Report --</option>';
+    reports.forEach(report => {
+        const option = document.createElement("option");
+        option.value = report.id;
+        option.text = `${report.issueType.toUpperCase()} - ${report.location}`;
+        option.dataset.type = report.issueType;
+        reportDropdown.appendChild(option);
+    });
+}
+
+// When admin selects a report, suggest resource
+document.getElementById("select-report").addEventListener("change", function () {
+    const selected = this.options[this.selectedIndex];
+    const issueType = selected.dataset.type;
+    const suggestion = emergencyResourceMap[issueType] || "rescue";
+    document.getElementById("suggested-resource").value = suggestion;
+});
+
+// Handle Allocation
+document.getElementById("smart-allocate-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const type = document.getElementById("suggested-resource").value;
+    const quantity = parseInt(document.getElementById("assign-quantity").value);
+
+    if (resourceInventory[type] >= quantity) {
+        resourceInventory[type] -= quantity;
+        loadResourceStats();
+        alert(`Allocated ${quantity} unit(s) of ${type}`);
+        this.reset();
+    } else {
+        alert("Insufficient resources available!");
+    }
+});
